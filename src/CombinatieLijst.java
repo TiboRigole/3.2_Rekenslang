@@ -30,6 +30,10 @@ public class CombinatieLijst {
    public void print() {
 	   for(String s : list) {System.out.println(s);}
    }
+   
+   public void clear() {
+	   list.clear();
+   }
     
 
 }
