@@ -44,7 +44,6 @@ public class Main {
 			//vooraf vereenvoudigen wanner het kan,
 			//als er bijvoorbeeld staat A * 5 + 3 + 2 + 5 + B
 			//dan kan dit al herleid worden naar A * 5 + 10 + B
-			rekenSom = herleidVooraf(rekenSom);
 			//variabelen waarmee we werken:
 				//			CombinatieLijst.getCombinatieLijst(), waarin de volgorde van de te vervangen letters inzitten
 				//			rekenSom , waarin het linkerdeel van de som zit, dit moeten we vervangen
@@ -66,312 +65,18 @@ public class Main {
 				if(getal == rechterDeel) {
 					//print die shit uit niffo
 				}
-			}
-			
-			
-			
-		}
-
-
-		
-		
+			}	
+		}	
 	}
 	
+	/*
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 */
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//12 * 2 + 4 * 1 * 14 * 15 + 11 + 5 - 9 * 8 + 4 * 9 * 7 + 13 * 10
-		//24+4
-		private static int rekenSomUit(String vergelijking) {
-			//laat deze methode vroegtijdig 0 returnen als het spel niet klopt
-			//tgaat echt superveel sneller zijn als je vroegtijdig 0 returnt als er iets niet klopt
-			//das het grootste probleem qua snelheid
-			vergelijking = vergelijking.replaceAll("\\s","");
-			
-			int [] waardes = telAantalKeerBewerkingen(vergelijking);
-			
-			int aantalPlus = waardes[0];
-			int aantalMin = waardes[1];
-			int aantalMaal = waardes[2];
-			int aantalDelen = waardes[3];
-			
-			System.out.println(aantalPlus +" " +aantalMin + " "+aantalMaal + " "+aantalDelen);
-			int tellerPlus = 0;
-			int tellerMaal = 0;
-			int tellerMin = 0;
-			int tellerDelen = 0;
-			
-			//verwerken van maals
-			while(tellerMaal != aantalMaal) {
-				int i = locatieEerstVolgende(vergelijking, '*');
-				int getalDervoor = pakGetalDervoor(vergelijking, i);
-				int aantalDigitsDervoor = aantalDigits(getalDervoor);
-				int getalDerna = pakGetalDerna(vergelijking, i);
-				int aantalDigitsDerna = aantalDigits(getalDerna);
-				
-				int nieuwGetal = getalDervoor * getalDerna;
-				
-				String x = vergelijking.substring(i-aantalDigitsDervoor, i+1+aantalDigitsDerna);
-				
-				System.out.println(x +" wordt vervangen door ");
-				System.out.println(nieuwGetal);
-				
-				StringBuilder sb =new StringBuilder(vergelijking);
-				sb.delete(i-aantalDigitsDervoor,i+aantalDigitsDerna+1);
-				sb.insert(i-aantalDigitsDervoor, nieuwGetal+"");
-				vergelijking = sb.toString();
-
-				System.out.println(vergelijking);
-				
-				
-				tellerMaal++;
-			};
-			
-			//verwerken van de delingen
-				//hier if deling gaat niet op, return 0
-			
-			//plussen en mins kunnen we van links naar rechts doen
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		private static int pakGetalDervoor(String vergelijking, int i) {
-			StringBuilder getal = new StringBuilder();
-			
-			for(int x=i-1 ; x>-1; x--) {
-				char karakter = vergelijking.charAt(x);
-				if(Character.isDigit(karakter)) {
-					int a = karakter -48;
-					getal.append(a);
-					}
-				else {
-					//als het dus geen character meer is
-					getal = getal.reverse();
-					return (Integer.parseInt(getal.toString()));
-				}
-			}
-			getal = getal.reverse();
-			return (Integer.parseInt(getal.toString()));
-		}
-
-
-
-
-
-
-
-
-
-		private static int pakGetalDerna(String vergelijking, int i) {
-			//i is de locatie van de bewerking, we lezen dus tot het geen digit meer is
-			StringBuilder getal = new StringBuilder();
-			
-			for(int x=i+1; x<vergelijking.length(); x++) {
-				
-				char karakter = vergelijking.charAt(x);
-				if(Character.isDigit(karakter)) {getal.append(karakter-48);}
-				else {
-					//als het dus geen cijfer meer is, dan is het terug een bewerking
-					return Integer.parseInt(getal.toString());
-				}
-			}
-			
-			return Integer.parseInt(getal.toString());
-		}
-
-
-
-
-
-
-
-
-
-		private static int locatieEerstVolgende(String vergelijking, char c) {
-			for(int i=0; i<vergelijking.length() ; i++) {
-				if(vergelijking.charAt(i) == c) {return i;}
-			}
-			System.out.println("probleem in lociatieEerstVolgende, er is geen bewerking: "+c+" gevonden");
-			return -1;
-		}
-
-
-
-
-
-
-
-
-
-		private static int aantalDigits(int getalDerna) {
-			String getal = getalDerna+"";
-			return getal.length();
-		}
-
-
-
-
-
-
-
-
-
-		private static int[] telAantalKeerBewerkingen(String vergelijking) {
-			int aantalPlus = 0;
-			int aantalMin = 0;
-			int aantalMaal =0;
-			int aantalDelen = 0;
-			
-			char c;
-			
-			for(int i=0; i<vergelijking.length(); i++) {
-				c = vergelijking.charAt(i);
-				if(c == '+') {aantalPlus++;}
-				else if(c == '-') {aantalMin++;}
-				else if(c == '*') {aantalMaal++;}
-				else if(c =='/') {aantalDelen++;}
-			}
-			
-			int [] waardes = new int[4];
-			waardes[0] = aantalPlus;
-			waardes[1] = aantalMin;
-			waardes[2] = aantalMaal;
-			waardes[3] = aantalDelen;
-			
-			return waardes;
-		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private static int[] vulGetallenInLijst(String getallenString) {
 		
 		int aantalGetallen = (getallenString.length()+1)/2;
@@ -390,7 +95,6 @@ public class Main {
 		}
 		return getallenLijst;
 	}
-	
 	
 	private static int pakRechterDeel(String som) {
 		
@@ -420,10 +124,9 @@ public class Main {
 		i = i-1;
 		return linkerDeel.substring(0, i);
 		
+	
 	}
-
-
-
+	
 	private static String vervangGetallen(String linkerDeel, String getallenVolgorde) {
 		
 		//A is niet de eerste letter in de string
@@ -465,6 +168,412 @@ public class Main {
 		}
 		return linkerDeel;	
 	}
+	
+	/*
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 * 
+	 * alle methodes voor rekenuit, en de methode zelf
+	 * 
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 */
+	
+	
+	private static int rekenSomUit(String vergelijking) {
+		
+		vergelijking = vergelijking.replaceAll("\\s","");
+		
+		int [] waardes = telAantalKeerBewerkingen(vergelijking);
+		
+		int aantalPlus = waardes[0];
+		int aantalMin = waardes[1];
+		int aantalMaal = waardes[2];
+		int aantalDelen = waardes[3];
+		
+		System.out.println(aantalPlus +" " +aantalMin + " "+aantalMaal + " "+aantalDelen);
+		int tellerPlus = 0;
+		int tellerMaal = 0;
+		int tellerMin = 0;
+		int tellerDelen = 0;
+		
+		//verwerken van de delingen
+		//hier if deling gaat niet op, return 0
+		while(tellerDelen != aantalDelen) {
+			
+			
+			int i = locatieEerstVolgende(vergelijking, ':');
+			String stukDervoor = voorDeling(vergelijking, i);
+			
+			int aantalDigitsDervoor = stukDervoor.length();
+			//het stukDervoor bestaat enkel uit getallen en maals, we kunnen het dus makkelijk volledig uitwerken
+			int getalDervoor = rekenSomUit(stukDervoor);
+			
+			StringBuilder nieuweVgl = new StringBuilder(vergelijking);
+			nieuweVgl.delete(i-aantalDigitsDervoor, i);
+			nieuweVgl.insert(i-aantalDigitsDervoor , getalDervoor+"");
+			vergelijking = nieuweVgl.toString();
+			
+			//nu kunnen we het effectieve getal nemen en delen 
+			i = locatieEerstVolgende(vergelijking, ':');
+			
+			aantalDigitsDervoor = aantalDigits(getalDervoor);
+			int getalDerna = pakGetalDerna(vergelijking, i);
+			int aantalDigitsDerna = aantalDigits(getalDerna);
+			
+			if(getalDervoor % getalDerna != 0) {return 0;}
+			else {
+				//dus als de rest na deling wel 0 is, dan kunnen we de deling uitvoeren
+				int nieuwGetal = getalDervoor / getalDerna;
+				
+				//volgende 3 lijnen mogen nog weg, zijn enkel ter controle van wat er gebeurt
+				String x = vergelijking.substring(i-aantalDigitsDervoor, i+1+aantalDigitsDerna);
+				System.out.println(x +" wordt vervangen door ");
+				System.out.println(nieuwGetal);
+				
+				StringBuilder sb =new StringBuilder(vergelijking);
+				sb.delete(i-aantalDigitsDervoor,i+aantalDigitsDerna+1);
+				sb.insert(i-aantalDigitsDervoor, nieuwGetal+"");
+				vergelijking = sb.toString();
+	
+				System.out.println(vergelijking);
+				
+				tellerDelen++;
+			}
+		}
+		
+		aantalMaal = telAantalMaal(vergelijking);
+		
+		while(tellerMaal != aantalMaal) {
+			int i = locatieEerstVolgende(vergelijking, '*');
+			int getalDervoor = pakGetalDervoor(vergelijking, i);
+			int aantalDigitsDervoor = aantalDigits(getalDervoor);
+			int getalDerna = pakGetalDerna(vergelijking, i);
+			int aantalDigitsDerna = aantalDigits(getalDerna);
+			
+			int nieuwGetal = getalDervoor * getalDerna;
+			
+			String x = vergelijking.substring(i-aantalDigitsDervoor, i+1+aantalDigitsDerna);
+			System.out.println(x +" wordt vervangen door ");
+			System.out.println(nieuwGetal);
+			
+			StringBuilder sb =new StringBuilder(vergelijking);
+			sb.delete(i-aantalDigitsDervoor,i+aantalDigitsDerna+1);
+			sb.insert(i-aantalDigitsDervoor, nieuwGetal+"");
+			vergelijking = sb.toString();
+
+			System.out.println(vergelijking);
+			
+			
+			tellerMaal++;
+		};
+		
+		//voor de recursie in het delen
+		if(aantalPlus == 0 && aantalMin == 0) {return Integer.parseInt(vergelijking);}
+		
+		
+		//nu nog de plussen en de mins, opletten met negatieve getallen?
+		
+		return doePlusMin(vergelijking);
+		//vergelijking nu van de vorm 12+13+2100-81+17+11+160+12+49
+		//hiervoor mss een aparte methode a broer
+		
+		//readVolgendeBewerking
+		//readVolgendGetal
+		
+	}
+	
+	
+	
+	/*
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 * 
+	 * alle hulpmethodes hiervoor, voor de optimalisatie dervan
+	 * 
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 */
+	
+	
+	
+	
+	//12+13+2100-81+17+11+160+12+49
+		private static int doePlusMin(String vergelijking) {
+			
+			int maximum = vergelijking.length();
+			int getal = leesGetal(vergelijking,0);
+
+			int teller = aantalDigits(getal);
+			
+			while(teller != maximum) {
+				char bewerking = vergelijking.charAt(teller);
+				System.out.println(bewerking);
+				int volgendGetal = pakGetalDerna(vergelijking, teller);
+				
+				if(bewerking == '+') {
+					System.out.println(getal +"+" + volgendGetal +"=");
+					getal = getal + volgendGetal;
+					System.out.println(getal);
+				}
+				else if(bewerking == '-') {
+					System.out.println(getal +"-" + volgendGetal +"=");
+					getal = getal - volgendGetal;
+					System.out.println(getal);
+				}
+				else {
+					System.out.println("fout in doeplusmin");
+				}
+				
+				teller = teller + aantalDigits(volgendGetal)+1;
+			}
+			return getal;
+		}
+
+
+
+
+
+
+		private static int leesGetal(String vergelijking, int beginPlek) {
+			StringBuilder sb = new StringBuilder();
+			for(int i=beginPlek; i<vergelijking.length() ; i++) {
+				
+				char c = vergelijking.charAt(i);
+				if(Character.isDigit(c)) {sb.append(c);}
+				else {return Integer.parseInt(sb.toString());}
+				
+			}
+			System.out.println("fout in de leesGetal methode");
+			return 0;
+		}
+
+
+
+
+
+
+		private static int telAantalMaal(String vergelijking) {
+			int aantalMaal = 0;
+			for(int i=0; i<vergelijking.length(); i++) {
+				if(vergelijking.charAt(i) =='*') {aantalMaal++;}
+			}
+			return aantalMaal;
+		}
+
+
+
+
+
+
+		private static int pakGetalDerna(String vergelijking, int i) {
+			//i is de locatie van de bewerking, we lezen dus tot het geen digit meer is
+			StringBuilder getal = new StringBuilder();
+			
+			for(int x=i+1; x<vergelijking.length(); x++) {
+				
+				char karakter = vergelijking.charAt(x);
+				if(Character.isDigit(karakter)) {getal.append(karakter-48);}
+				else {
+					//als het dus geen cijfer meer is, dan is het terug een bewerking
+					return Integer.parseInt(getal.toString());
+				}
+			}
+			
+			return Integer.parseInt(getal.toString());
+		}
+
+
+
+
+
+
+		private static String voorDeling(String vergelijking, int indexOfDeel) {
+			
+			StringBuilder sb = new StringBuilder();
+			
+			for(int i =indexOfDeel-1 ; i>-1 ; i--) {
+				char c = vergelijking.charAt(i);
+				if(Character.isDigit(c) || c =='*') {
+					sb.append(c);
+				}
+				else {
+					return sb.reverse().toString();
+				}
+			}
+			return sb.reverse().toString();
+		}
+
+
+
+
+
+
+		private static int[] telAantalKeerBewerkingen(String vergelijking) {
+			int aantalPlus = 0;
+			int aantalMin = 0;
+			int aantalMaal =0;
+			int aantalDelen = 0;
+			
+			char c;
+			
+			for(int i=0; i<vergelijking.length(); i++) {
+				c = vergelijking.charAt(i);
+				if(c == '+') {aantalPlus++;}
+				else if(c == '-') {aantalMin++;}
+				else if(c == '*') {aantalMaal++;}
+				else if(c ==':') {aantalDelen++;}
+			}
+			
+			int [] waardes = new int[4];
+			waardes[0] = aantalPlus;
+			waardes[1] = aantalMin;
+			waardes[2] = aantalMaal;
+			waardes[3] = aantalDelen;
+			
+			return waardes;
+		}
+		
+		private static int locatieEerstVolgende (String vergelijking , char c) {
+			for(int i=0; i<vergelijking.length() ; i++) {
+				
+				if(vergelijking.charAt(i) == c) {
+					return i;
+					}
+			}
+			
+			System.out.println("probleem in lociatieEerstVolgende, er is geen bewerking: "+c+" gevonden");
+			return -1;
+		}
+		
+		
+		private static int aantalDigits(int getalDerna) {
+			String getal = getalDerna+"";
+			return getal.length();
+		}
+
+		private static int pakGetalDervoor(String vergelijking, int i) {
+			StringBuilder getal = new StringBuilder();
+			
+			for(int x=i-1 ; x>-1; x--) {
+				char karakter = vergelijking.charAt(x);
+				if(Character.isDigit(karakter)) {
+					int a = karakter -48;
+					getal.append(a);
+					}
+				else {
+					//als het dus geen character meer is
+					getal = getal.reverse();
+					return (Integer.parseInt(getal.toString()));
+				}
+			}
+			getal = getal.reverse();
+			return (Integer.parseInt(getal.toString()));
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+	
+
+
+
+
+
 
 
 
