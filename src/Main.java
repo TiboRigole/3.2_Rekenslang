@@ -34,6 +34,13 @@ public class Main {
 			//invullen in een arrayList
 			getallenLijst = vulGetallenInLijst(getallenString);
 			
+			//generatie van de verschillende combinaties
+			CombinatieLijst.vulCombinatiesIn(getallenLijst);
+			
+			//volgende 2 lijnen mogen nog weg
+			//System.out.println("klaar met invullen combinaties");
+			//CombinatieLijst.getCombinatieLijst().print();
+			
 			//nemen van het rechterdeel
 			rechterDeel = pakRechterDeel(rekenSom);
 			
@@ -52,22 +59,42 @@ public class Main {
 			//vervangen van alle letters in de linkerdeel
 			int size = CombinatieLijst.getCombinatieLijst().getArray().size();
 			
+			
+			//voor elke mogelijke set van getallen
 			for(int i=0; i<size; i++) {
+				
 				String teVervangen = CombinatieLijst.getCombinatieLijst().getArray().get(i);
 				
-				rekenSom = vervangGetallen(rekenSom, teVervangen);
+				String rekenSomVervangd = vervangGetallen(rekenSom, teVervangen);
 				
 				//rekensom is nu van de vorm 
 				//12 * 2 + 4 * 1 * 14 * 15 + 11 + 5 - 9 * 8 + 4 * 9 * 7 + 13 * 10
 				
-				int getal = rekenSomUit(rekenSom);
-				
+				int getal = rekenvergelijkingUit(rekenSomVervangd);
+				//System.out.println("getal = "+getal);
+
 				if(getal == rechterDeel) {
-					//print die shit uit niffo
+					StringBuilder antwoord = new StringBuilder();
+					antwoord.append(rkslng+1 +" ");
+
+					for(int u=0 ; u<teVervangen.length(); u++) {
+						
+						antwoord.append(Character.toChars('A'+u));
+						antwoord.append("=" + teVervangen.charAt(u));
+						if(u != teVervangen.length()-1) {antwoord.append(" ");}
+					}
+					
+					System.out.println(antwoord.toString());
 				}
 			}	
 		}	
 	}
+	
+	
+	
+	
+	
+	
 	
 	/*
 	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -80,7 +107,7 @@ public class Main {
 	private static int[] vulGetallenInLijst(String getallenString) {
 		
 		int aantalGetallen = (getallenString.length()+1)/2;
-		System.out.println("aantal getallen in te vullen :"+aantalGetallen);
+		//System.out.println("aantal getallen in te vullen :"+aantalGetallen);
 		
 		int[] getallenLijst = new int[aantalGetallen];
 		int teller = 0;
@@ -117,7 +144,7 @@ public class Main {
 		
 		while(a != 61) {
 			i--;
-			System.out.println(som.charAt(i));
+			//System.out.println(som.charAt(i));
 			a = som.charAt(i);
 		}
 		
@@ -178,7 +205,7 @@ public class Main {
 	 */
 	
 	
-	private static int rekenSomUit(String vergelijking) {
+	private static int rekenvergelijkingUit(String vergelijking) {
 		
 		vergelijking = vergelijking.replaceAll("\\s","");
 		
@@ -189,7 +216,7 @@ public class Main {
 		int aantalMaal = waardes[2];
 		int aantalDelen = waardes[3];
 		
-		System.out.println(aantalPlus +" " +aantalMin + " "+aantalMaal + " "+aantalDelen);
+		//System.out.println(aantalPlus +" " +aantalMin + " "+aantalMaal + " "+aantalDelen);
 		int tellerPlus = 0;
 		int tellerMaal = 0;
 		int tellerMin = 0;
@@ -205,7 +232,7 @@ public class Main {
 			
 			int aantalDigitsDervoor = stukDervoor.length();
 			//het stukDervoor bestaat enkel uit getallen en maals, we kunnen het dus makkelijk volledig uitwerken
-			int getalDervoor = rekenSomUit(stukDervoor);
+			int getalDervoor = rekenvergelijkingUit(stukDervoor);
 			
 			StringBuilder nieuweVgl = new StringBuilder(vergelijking);
 			nieuweVgl.delete(i-aantalDigitsDervoor, i);
@@ -226,15 +253,15 @@ public class Main {
 				
 				//volgende 3 lijnen mogen nog weg, zijn enkel ter controle van wat er gebeurt
 				String x = vergelijking.substring(i-aantalDigitsDervoor, i+1+aantalDigitsDerna);
-				System.out.println(x +" wordt vervangen door ");
-				System.out.println(nieuwGetal);
+				//System.out.println(x +" wordt vervangen door ");
+				//System.out.println(nieuwGetal);
 				
 				StringBuilder sb =new StringBuilder(vergelijking);
 				sb.delete(i-aantalDigitsDervoor,i+aantalDigitsDerna+1);
 				sb.insert(i-aantalDigitsDervoor, nieuwGetal+"");
 				vergelijking = sb.toString();
 	
-				System.out.println(vergelijking);
+				//System.out.println(vergelijking);
 				
 				tellerDelen++;
 			}
@@ -252,15 +279,15 @@ public class Main {
 			int nieuwGetal = getalDervoor * getalDerna;
 			
 			String x = vergelijking.substring(i-aantalDigitsDervoor, i+1+aantalDigitsDerna);
-			System.out.println(x +" wordt vervangen door ");
-			System.out.println(nieuwGetal);
+			//System.out.println(x +" wordt vervangen door ");
+			//System.out.println(nieuwGetal);
 			
 			StringBuilder sb =new StringBuilder(vergelijking);
 			sb.delete(i-aantalDigitsDervoor,i+aantalDigitsDerna+1);
 			sb.insert(i-aantalDigitsDervoor, nieuwGetal+"");
 			vergelijking = sb.toString();
 
-			System.out.println(vergelijking);
+			//System.out.println(vergelijking);
 			
 			
 			tellerMaal++;
@@ -305,21 +332,21 @@ public class Main {
 			
 			while(teller != maximum) {
 				char bewerking = vergelijking.charAt(teller);
-				System.out.println(bewerking);
+				//System.out.println(bewerking);
 				int volgendGetal = pakGetalDerna(vergelijking, teller);
 				
 				if(bewerking == '+') {
-					System.out.println(getal +"+" + volgendGetal +"=");
+					//System.out.println(getal +"+" + volgendGetal +"=");
 					getal = getal + volgendGetal;
-					System.out.println(getal);
+					//System.out.println(getal);
 				}
 				else if(bewerking == '-') {
-					System.out.println(getal +"-" + volgendGetal +"=");
+					//System.out.println(getal +"-" + volgendGetal +"=");
 					getal = getal - volgendGetal;
-					System.out.println(getal);
+					//System.out.println(getal);
 				}
 				else {
-					System.out.println("fout in doeplusmin");
+					//System.out.println("fout in doeplusmin");
 				}
 				
 				teller = teller + aantalDigits(volgendGetal)+1;
